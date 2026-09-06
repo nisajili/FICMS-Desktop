@@ -13,10 +13,11 @@
     "typecheck": "tsc --noEmit -p tsconfig.web.json && tsc --noEmit -p tsconfig.electron.json",
     "lint": "eslint src electron --ext .ts,.tsx",
     "start": "electron .",
-    "dist:win": "electron-builder --win",
-    "dist:mac": "electron-builder --mac",
-    "dist:linux": "electron-builder --linux",
-    "dist:all": "electron-builder --win --mac --linux"
+    "bundle:backend": "node ../../scripts/bundle-backend.mjs",
+    "dist:win": "pnpm run bundle:backend && electron-builder --win",
+    "dist:mac": "pnpm run bundle:backend && electron-builder --mac",
+    "dist:linux": "pnpm run bundle:backend && electron-builder --linux",
+    "dist:all": "pnpm run bundle:backend && electron-builder --win --mac --linux"
   },
   "dependencies": {
     "electron-updater": "^6.3.9",

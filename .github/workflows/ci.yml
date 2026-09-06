@@ -88,6 +88,9 @@ jobs:
       - name: Build (packages, API, worker, desktop renderer + main)
         run: pnpm -r --filter './packages/**' --filter './apps/**' build
 
+      - name: Bundle embedded backend
+        run: node scripts/bundle-backend.mjs
+
       - name: Package installers
         working-directory: apps/desktop
         run: pnpm exec electron-builder ${{ matrix.args }} --publish never

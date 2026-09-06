@@ -1,8 +1,16 @@
 # FICMS desktop packaging configuration (electron-builder).
-# Packaging runs on native OS runners in CI; the sandbox cannot download the
-# Electron binary, so `dist:*` scripts are exercised there only.
+# Produces, per platform:
+#   Windows  -> FICMS-<ver>-<arch>.exe (NSIS) + .msi (WiX)
+#   macOS    -> FICMS-<ver>-<arch>.dmg + .pkg
+#   Linux    -> FICMS-<ver>-<arch>.AppImage + .deb + .rpm
+#
+# Windows and macOS installers can only be produced on their native OS
+# (electron-builder cannot cross-compile those from Linux), so CI builds them
+# on windows-latest / macos-13 / macos-14 runners. Linux targets build anywhere
+# Linux runs, including a dev machine or CI.
 appId: com.ficms.desktop
 productName: FICMS
+artifactName: ${productName}-${version}-${arch}.${ext}
 directories:
   output: release
   buildResources: build
@@ -11,11 +19,9 @@ files:
   - dist-electron/**
   - package.json
 extraResources:
-  # Embedded standalone backend (built @ficms/api + its runtime deps).
-  - from: ../api/dist
+  # Self-contained embedded backend for standalone mode (see scripts/bundle-backend.mjs).
+  - from: backend-bundle
     to: backend
-  - from: ../api/node_modules
-    to: backend/node_modules
 asar: true
 npmRebuild: false
 publish: null

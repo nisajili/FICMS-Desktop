@@ -22,6 +22,34 @@ Two workflows drive the pipeline (`.github/workflows/`):
 Code-signing certificates are **not** committed. CI produces unsigned
 artifacts; a releasing clinic supplies its own certificates to sign.
 
+## Installer artifacts
+
+electron-builder emits one artifact per requested target under
+`apps/desktop/release/`, named `FICMS-<version>-<arch>.<ext>` (see
+`artifactName` in `electron-builder.yml`):
+
+| Platform | Target | Artifacts |
+| --- | --- | --- |
+| Windows | NSIS | `FICMS-0.1.0-x64.exe`, `FICMS-0.1.0-arm64.exe` |
+| Windows | MSI (WiX) | `FICMS-0.1.0-x64.msi` |
+| macOS | DMG | `FICMS-0.1.0-x64.dmg`, `FICMS-0.1.0-arm64.dmg` |
+| macOS | PKG | `FICMS-0.1.0-x64.pkg`, `FICMS-0.1.0-arm64.pkg` |
+| Linux | AppImage | `FICMS-0.1.0-x86_64.AppImage` |
+| Linux | DEB | `FICMS-0.1.0-amd64.deb` |
+| Linux | RPM | `FICMS-0.1.0-x86_64.rpm` |
+
+Windows and macOS installers can only be produced on their native OS
+(electron-builder cannot cross-compile those from Linux), so they are built by
+the CI matrix; Linux targets build on any Linux machine. Every package job also
+emits `SHA256SUMS`, per-artifact `<file>.sha256`, the update metadata
+(`latest*.yml`, `*.blockmap`) and `sbom.cdx.json`.
+
+The standalone desktop embeds a self-contained backend (compiled `@ficms/api`
+plus its production dependencies as real files, no symlinks) assembled by
+`scripts/bundle-backend.mjs` into `apps/desktop/backend-bundle/`. The
+`dist:*` scripts and both CI packaging jobs run it automatically before
+`electron-builder`.
+
 ## Release steps
 
 ```bash
