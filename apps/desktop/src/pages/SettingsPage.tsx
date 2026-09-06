@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { api, type Branding, type ServiceItem } from '../api';
 import { useAuth } from '../auth';
+import type { FicmsUpdateStatus } from '../ficms-global';
 
 export function SettingsPage() {
   const { token, mode } = useAuth();
   const [branding, setBranding] = useState<Branding | null>(null);
   const [services, setServices] = useState<ServiceItem[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [updateEnabled, setUpdateEnabled] = useState(false);
+  const [updateStatus, setUpdateStatus] = useState<FicmsUpdateStatus>({ state: 'idle' });
 
   useEffect(() => {
     if (!token) return;
@@ -21,9 +24,38 @@ export function SettingsPage() {
     })();
   }, [token]);
 
+  useEffect(() => {
+    const updater = window.ficms?.updater;
+    if (!updater) return;
+    (async () => {
+      setUpdateEnabled(await updater.enabled());
+      setUpdateStatus(await updater.status());
+    })();
+    return updater.onStatus((status) => setUpdateStatus(status));
+  }, []);
+
   const price = (s: ServiceItem) => {
     const minor = s.priceMinor ?? s.price_minor ?? 0;
     return `${(minor / 100).toFixed(2)} ${branding?.currency ?? ''}`.trim();
+  };
+
+  const updateLabel = (status: FicmsUpdateStatus): string => {
+    switch (status.state) {
+      case 'checking':
+        return 'Checking for updates…';
+      case 'available':
+        return `Update ${status.version ?? ''} available`.trim();
+      case 'not-available':
+        return 'Up to date';
+      case 'downloading':
+        return `Downloading${status.percent !== undefined ? ` ${status.percent.toFixed(0)}%` : ''}…`;
+      case 'downloaded':
+        return 'Update ready — restart to install';
+      case 'error':
+        return `Update error: ${status.error ?? 'unknown'}`;
+      default:
+        return 'Idle';
+    }
   };
 
   return (
@@ -62,6 +94,44 @@ export function SettingsPage() {
             <span>{(branding?.languages ?? []).join(', ') || '—'}</span>
           </li>
         </ul>
+      </section>
+
+      <section className="panel">
+        <h2>Software updates</h2>
+        {!window.ficms?.updater ? (
+          <p className="muted">
+            Update management is available in the installed desktop app. This browser preview cannot
+            receive updates.
+          </p>
+        ) : !updateEnabled ? (
+          <p className="muted">
+            Automatic updates are not configured for this installation. An administrator can enable
+            them by pointing the app at a self-hosted update server (see the operations guide).
+          </p>
+        ) : (
+          <div className="update-row">
+            <span className="mono">{updateLabel(updateStatus)}</span>
+            <div className="update-actions">
+              <button
+                type="button"
+                disabled={updateStatus.state === 'checking' || updateStatus.state === 'downloading'}
+                onClick={() => void window.ficms?.updater?.check()}
+              >
+                Check now
+              </button>
+              {updateStatus.state === 'available' && (
+                <button type="button" onClick={() => void window.ficms?.updater?.download()}>
+                  Download
+                </button>
+              )}
+              {updateStatus.state === 'downloaded' && (
+                <button type="button" onClick={() => void window.ficms?.updater?.install()}>
+                  Restart &amp; install
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </section>
 
       <section className="panel">

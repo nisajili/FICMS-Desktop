@@ -1,0 +1,119 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify (build / lint / typecheck / test)
+    runs-on: ubuntu-latest
+    env:
+      # The test lane never launches Electron, so skip its (large) binary download.
+      ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build (packages, API, worker, desktop)
+        run: pnpm -r --filter './packages/**' --filter './apps/**' build
+
+      - name: Lint
+        run: pnpm -r lint
+
+      - name: Typecheck
+        run: pnpm -r typecheck
+
+      - name: Test (unit + integration + API e2e)
+        run: pnpm -r test
+
+  package:
+    name: Package (${{ matrix.label }})
+    runs-on: ${{ matrix.os }}
+    needs: verify
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            label: Linux x64
+            args: --linux --x64
+          - os: windows-latest
+            label: Windows x64
+            args: --win --x64
+          - os: macos-13
+            label: macOS Intel (x64)
+            args: --mac --x64
+          - os: macos-14
+            label: macOS Apple Silicon (arm64)
+            args: --mac --arm64
+    env:
+      # No code-signing certificates are committed; produce unsigned artifacts.
+      CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.cache/electron-builder
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies (incl. Electron binary)
+        run: pnpm install --frozen-lockfile
+
+      - name: Build (packages, API, worker, desktop renderer + main)
+        run: pnpm -r --filter './packages/**' --filter './apps/**' build
+
+      - name: Package installers
+        working-directory: apps/desktop
+        run: pnpm exec electron-builder ${{ matrix.args }} --publish never
+
+      - name: Generate SHA-256 checksums
+        run: node scripts/gen-checksums.mjs apps/desktop/release
+
+      - name: Generate SBOM
+        run: node scripts/gen-sbom.mjs --out apps/desktop/release/sbom.cdx.json
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ficms-${{ matrix.label }}
+          path: |
+            apps/desktop/release/*.exe
+            apps/desktop/release/*.msi
+            apps/desktop/release/*.dmg
+            apps/desktop/release/*.pkg
+            apps/desktop/release/*.AppImage
+            apps/desktop/release/*.deb
+            apps/desktop/release/*.rpm
+            apps/desktop/release/*.blockmap
+            apps/desktop/release/*.yml
+            apps/desktop/release/*.yaml
+            apps/desktop/release/SHA256SUMS
+            apps/desktop/release/sbom.cdx.json
+          if-no-files-found: error
+          retention-days: 14

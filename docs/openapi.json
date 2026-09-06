@@ -1,0 +1,2800 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "summary": "Authenticate with username and password",
+        "parameters": [
+          {
+            "name": "user-agent",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/totp/verify": {
+      "post": {
+        "operationId": "AuthController_verifyTotp",
+        "summary": "Complete two-factor authentication",
+        "parameters": [
+          {
+            "name": "user-agent",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/recover": {
+      "post": {
+        "operationId": "AuthController_recover",
+        "summary": "Reset password using a recovery code",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/refresh": {
+      "post": {
+        "operationId": "AuthController_refresh",
+        "parameters": [
+          {
+            "name": "user-agent",
+            "required": true,
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "operationId": "AuthController_logout",
+        "summary": "Revoke the current session",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/me": {
+      "get": {
+        "operationId": "AuthController_me",
+        "summary": "Return the current user, roles and permissions",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/change-password": {
+      "post": {
+        "operationId": "AuthController_changePassword",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/totp/setup": {
+      "post": {
+        "operationId": "AuthController_setupTotp",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/totp/confirm": {
+      "post": {
+        "operationId": "AuthController_confirmTotp",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/auth/totp/disable": {
+      "post": {
+        "operationId": "AuthController_disableTotp",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/api/v1/users": {
+      "get": {
+        "operationId": "UsersController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      },
+      "post": {
+        "operationId": "UsersController_create",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/api/v1/users/{id}": {
+      "patch": {
+        "operationId": "UsersController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/api/v1/users/roles": {
+      "get": {
+        "operationId": "UsersController_roles",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/api/v1/users/roles/{id}": {
+      "patch": {
+        "operationId": "UsersController_updateRole",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/api/v1/patients": {
+      "get": {
+        "operationId": "PatientsController_list",
+        "parameters": [
+          {
+            "name": "page",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "patients"
+        ]
+      },
+      "post": {
+        "operationId": "PatientsController_register",
+        "summary": "Register a new patient (duplicate detection included)",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "patients"
+        ]
+      }
+    },
+    "/api/v1/patients/search": {
+      "get": {
+        "operationId": "PatientsController_search",
+        "parameters": [
+          {
+            "name": "q",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "patients"
+        ]
+      }
+    },
+    "/api/v1/patients/duplicates": {
+      "post": {
+        "operationId": "PatientsController_duplicates",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "patients"
+        ]
+      }
+    },
+    "/api/v1/patients/merge": {
+      "post": {
+        "operationId": "PatientsController_merge",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "patients"
+        ]
+      }
+    },
+    "/api/v1/patients/{id}/partners": {
+      "post": {
+        "operationId": "PatientsController_addPartner",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "patients"
+        ]
+      }
+    },
+    "/api/v1/patients/{id}": {
+      "get": {
+        "operationId": "PatientsController_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "patients"
+        ]
+      },
+      "patch": {
+        "operationId": "PatientsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "patients"
+        ]
+      }
+    },
+    "/api/v1/patients/{id}/appointments": {
+      "get": {
+        "operationId": "PatientsController_appointments",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "patients"
+        ]
+      }
+    },
+    "/api/v1/patients/appointments": {
+      "post": {
+        "operationId": "PatientsController_schedule",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "patients"
+        ]
+      }
+    },
+    "/api/v1/patients/appointments/{id}/check-in": {
+      "post": {
+        "operationId": "PatientsController_checkIn",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "patients"
+        ]
+      }
+    },
+    "/api/v1/patients/appointments/{id}/check-out": {
+      "post": {
+        "operationId": "PatientsController_checkOut",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "patients"
+        ]
+      }
+    },
+    "/api/v1/patients/appointments/{id}/cancel": {
+      "post": {
+        "operationId": "PatientsController_cancel",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "patients"
+        ]
+      }
+    },
+    "/api/v1/clinical/records": {
+      "post": {
+        "operationId": "ClinicalController_createRecord",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/records/{id}": {
+      "patch": {
+        "operationId": "ClinicalController_updateRecord",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/records/{id}/sign": {
+      "post": {
+        "operationId": "ClinicalController_sign",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/records/{id}/verify": {
+      "post": {
+        "operationId": "ClinicalController_verify",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/records/{id}/release": {
+      "post": {
+        "operationId": "ClinicalController_release",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/patients/{patientId}/records": {
+      "get": {
+        "operationId": "ClinicalController_listRecords",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/records/{id}/versions": {
+      "get": {
+        "operationId": "ClinicalController_versions",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/consultations": {
+      "post": {
+        "operationId": "ClinicalController_createConsultation",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/consultations/{id}/sign": {
+      "post": {
+        "operationId": "ClinicalController_signConsultation",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/patients/{patientId}/consultations": {
+      "get": {
+        "operationId": "ClinicalController_consultations",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/diagnoses": {
+      "post": {
+        "operationId": "ClinicalController_addDiagnosis",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/patients/{patientId}/diagnoses": {
+      "get": {
+        "operationId": "ClinicalController_diagnoses",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/prescriptions": {
+      "post": {
+        "operationId": "ClinicalController_addPrescription",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/patients/{patientId}/prescriptions": {
+      "get": {
+        "operationId": "ClinicalController_prescriptions",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/investigations": {
+      "post": {
+        "operationId": "ClinicalController_orderInvestigation",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/patients/{patientId}/investigations": {
+      "get": {
+        "operationId": "ClinicalController_investigations",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/alerts": {
+      "post": {
+        "operationId": "ClinicalController_addAlert",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/clinical/patients/{patientId}/alerts": {
+      "get": {
+        "operationId": "ClinicalController_alerts",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clinical"
+        ]
+      }
+    },
+    "/api/v1/cycles": {
+      "get": {
+        "operationId": "CyclesController_list",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      },
+      "post": {
+        "operationId": "CyclesController_create",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/cycles/{id}": {
+      "get": {
+        "operationId": "CyclesController_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/cycles/{id}/status": {
+      "patch": {
+        "operationId": "CyclesController_setStatus",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/cycles/{id}/complete": {
+      "post": {
+        "operationId": "CyclesController_complete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/cycles/{id}/cancel": {
+      "post": {
+        "operationId": "CyclesController_cancel",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/cycles/{id}/timeline": {
+      "get": {
+        "operationId": "CyclesController_timeline",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/cycles/timeline-events": {
+      "post": {
+        "operationId": "CyclesController_addTimelineEvent",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/cycles/timeline-events/{id}/occurred": {
+      "post": {
+        "operationId": "CyclesController_markOccurred",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/cycles/{id}/follicles": {
+      "post": {
+        "operationId": "CyclesController_addFollicle",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      },
+      "get": {
+        "operationId": "CyclesController_follicles",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/cycles/{id}/hormones": {
+      "post": {
+        "operationId": "CyclesController_addHormone",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      },
+      "get": {
+        "operationId": "CyclesController_hormones",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/cycles/{id}/oocytes": {
+      "post": {
+        "operationId": "CyclesController_addOocytes",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      },
+      "get": {
+        "operationId": "CyclesController_oocytes",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/cycles/{id}/fertilization": {
+      "post": {
+        "operationId": "CyclesController_fertilization",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/cycles/{id}/embryos": {
+      "post": {
+        "operationId": "CyclesController_createEmbryo",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      },
+      "get": {
+        "operationId": "CyclesController_embryos",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/cycles/embryos/{embryoId}": {
+      "patch": {
+        "operationId": "CyclesController_updateEmbryo",
+        "parameters": [
+          {
+            "name": "embryoId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/cycles/{id}/pgt": {
+      "post": {
+        "operationId": "CyclesController_addPgt",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      },
+      "get": {
+        "operationId": "CyclesController_pgt",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cycles"
+        ]
+      }
+    },
+    "/api/v1/laboratory/samples": {
+      "post": {
+        "operationId": "LaboratoryController_createSample",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "laboratory"
+        ]
+      }
+    },
+    "/api/v1/laboratory/analyses": {
+      "post": {
+        "operationId": "LaboratoryController_addAnalysis",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "laboratory"
+        ]
+      }
+    },
+    "/api/v1/laboratory/analyses/{id}/verify": {
+      "post": {
+        "operationId": "LaboratoryController_verifyAnalysis",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "laboratory"
+        ]
+      }
+    },
+    "/api/v1/laboratory/analyses/{id}/release": {
+      "post": {
+        "operationId": "LaboratoryController_releaseAnalysis",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "laboratory"
+        ]
+      }
+    },
+    "/api/v1/laboratory/results": {
+      "post": {
+        "operationId": "LaboratoryController_enterResult",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "laboratory"
+        ]
+      },
+      "get": {
+        "operationId": "LaboratoryController_results",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "laboratory"
+        ]
+      }
+    },
+    "/api/v1/laboratory/results/{id}/verify": {
+      "post": {
+        "operationId": "LaboratoryController_verifyResult",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "laboratory"
+        ]
+      }
+    },
+    "/api/v1/laboratory/results/{id}/release": {
+      "post": {
+        "operationId": "LaboratoryController_releaseResult",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "laboratory"
+        ]
+      }
+    },
+    "/api/v1/laboratory/results/critical": {
+      "get": {
+        "operationId": "LaboratoryController_critical",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "laboratory"
+        ]
+      }
+    },
+    "/api/v1/laboratory/qc": {
+      "post": {
+        "operationId": "LaboratoryController_qc",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "laboratory"
+        ]
+      },
+      "get": {
+        "operationId": "LaboratoryController_qcList",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "laboratory"
+        ]
+      }
+    },
+    "/api/v1/laboratory/accessions": {
+      "post": {
+        "operationId": "LaboratoryController_accession",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "laboratory"
+        ]
+      }
+    },
+    "/api/v1/cryobank/hierarchy": {
+      "get": {
+        "operationId": "CryobankController_hierarchy",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/tanks": {
+      "get": {
+        "operationId": "CryobankController_tanks",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      },
+      "post": {
+        "operationId": "CryobankController_createTank",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/facilities": {
+      "post": {
+        "operationId": "CryobankController_createFacility",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/rooms": {
+      "post": {
+        "operationId": "CryobankController_createRoom",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/canisters": {
+      "post": {
+        "operationId": "CryobankController_createCanister",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/canes": {
+      "post": {
+        "operationId": "CryobankController_createCane",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/goblets": {
+      "post": {
+        "operationId": "CryobankController_createGoblet",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/racks": {
+      "post": {
+        "operationId": "CryobankController_createRack",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/positions": {
+      "post": {
+        "operationId": "CryobankController_createPosition",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/temperature": {
+      "post": {
+        "operationId": "CryobankController_temperature",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/items": {
+      "get": {
+        "operationId": "CryobankController_items",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "entityType",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      },
+      "post": {
+        "operationId": "CryobankController_store",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/items/{id}/transfer": {
+      "post": {
+        "operationId": "CryobankController_transfer",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/items/{id}/release": {
+      "post": {
+        "operationId": "CryobankController_release",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/items/{id}/dispose": {
+      "post": {
+        "operationId": "CryobankController_dispose",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/agreements": {
+      "post": {
+        "operationId": "CryobankController_agreement",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/cryobank/items/{id}/witness": {
+      "get": {
+        "operationId": "CryobankController_witness",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "cryobank"
+        ]
+      }
+    },
+    "/api/v1/finance/invoices": {
+      "get": {
+        "operationId": "FinanceController_list",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "finance"
+        ]
+      },
+      "post": {
+        "operationId": "FinanceController_createInvoice",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "finance"
+        ]
+      }
+    },
+    "/api/v1/finance/invoices/{id}": {
+      "get": {
+        "operationId": "FinanceController_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "finance"
+        ]
+      }
+    },
+    "/api/v1/finance/invoices/{id}/issue": {
+      "post": {
+        "operationId": "FinanceController_issue",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "finance"
+        ]
+      }
+    },
+    "/api/v1/finance/invoices/{id}/void": {
+      "post": {
+        "operationId": "FinanceController_voidInvoice",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "finance"
+        ]
+      }
+    },
+    "/api/v1/finance/invoices/{id}/installments": {
+      "post": {
+        "operationId": "FinanceController_installment",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "finance"
+        ]
+      }
+    },
+    "/api/v1/finance/payments": {
+      "post": {
+        "operationId": "FinanceController_pay",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "finance"
+        ]
+      }
+    },
+    "/api/v1/finance/payments/{id}/void": {
+      "post": {
+        "operationId": "FinanceController_voidPayment",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "finance"
+        ]
+      }
+    },
+    "/api/v1/finance/credit-notes": {
+      "post": {
+        "operationId": "FinanceController_creditNote",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "finance"
+        ]
+      }
+    },
+    "/api/v1/finance/shifts/open": {
+      "post": {
+        "operationId": "FinanceController_openShift",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "finance"
+        ]
+      }
+    },
+    "/api/v1/finance/shifts/{id}/close": {
+      "post": {
+        "operationId": "FinanceController_closeShift",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "finance"
+        ]
+      }
+    },
+    "/api/v1/finance/revenue": {
+      "get": {
+        "operationId": "FinanceController_revenue",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "finance"
+        ]
+      }
+    },
+    "/api/v1/inventory/stock": {
+      "get": {
+        "operationId": "InventoryController_stock",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "inventory"
+        ]
+      },
+      "post": {
+        "operationId": "InventoryController_createStock",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "inventory"
+        ]
+      }
+    },
+    "/api/v1/inventory/movements": {
+      "post": {
+        "operationId": "InventoryController_movement",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "inventory"
+        ]
+      }
+    },
+    "/api/v1/inventory/adjust": {
+      "post": {
+        "operationId": "InventoryController_adjust",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "inventory"
+        ]
+      }
+    },
+    "/api/v1/inventory/issue-fefo": {
+      "post": {
+        "operationId": "InventoryController_issueFefo",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "inventory"
+        ]
+      }
+    },
+    "/api/v1/inventory/ledger": {
+      "get": {
+        "operationId": "InventoryController_ledger",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "inventory"
+        ]
+      }
+    },
+    "/api/v1/inventory/expiring": {
+      "get": {
+        "operationId": "InventoryController_expiring",
+        "parameters": [
+          {
+            "name": "days",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "inventory"
+        ]
+      }
+    },
+    "/api/v1/inventory/low-stock": {
+      "get": {
+        "operationId": "InventoryController_lowStock",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "inventory"
+        ]
+      }
+    },
+    "/api/v1/inventory/dispense": {
+      "post": {
+        "operationId": "InventoryController_dispense",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "inventory"
+        ]
+      }
+    },
+    "/api/v1/inventory/suppliers": {
+      "get": {
+        "operationId": "InventoryController_suppliers",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "inventory"
+        ]
+      },
+      "post": {
+        "operationId": "InventoryController_createSupplier",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "inventory"
+        ]
+      }
+    },
+    "/api/v1/inventory/purchase-orders": {
+      "post": {
+        "operationId": "InventoryController_purchaseOrder",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "inventory"
+        ]
+      }
+    },
+    "/api/v1/settings/clinic": {
+      "get": {
+        "operationId": "SettingsController_get",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      },
+      "patch": {
+        "operationId": "SettingsController_update",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      }
+    },
+    "/api/v1/settings/branches": {
+      "get": {
+        "operationId": "SettingsController_branches",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      },
+      "post": {
+        "operationId": "SettingsController_createBranch",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      }
+    },
+    "/api/v1/settings/departments": {
+      "get": {
+        "operationId": "SettingsController_departments",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      },
+      "post": {
+        "operationId": "SettingsController_createDepartment",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      }
+    },
+    "/api/v1/settings/services": {
+      "get": {
+        "operationId": "SettingsController_services",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      },
+      "post": {
+        "operationId": "SettingsController_createService",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      }
+    },
+    "/api/v1/settings/tests": {
+      "get": {
+        "operationId": "SettingsController_tests",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      },
+      "post": {
+        "operationId": "SettingsController_createTest",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      }
+    },
+    "/api/v1/settings/medications": {
+      "get": {
+        "operationId": "SettingsController_medications",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      },
+      "post": {
+        "operationId": "SettingsController_createMedication",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      }
+    },
+    "/api/v1/settings/form-templates": {
+      "get": {
+        "operationId": "SettingsController_formTemplates",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      },
+      "post": {
+        "operationId": "SettingsController_createFormTemplate",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      }
+    },
+    "/api/v1/settings/consent-templates": {
+      "get": {
+        "operationId": "SettingsController_consentTemplates",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      },
+      "post": {
+        "operationId": "SettingsController_createConsentTemplate",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      }
+    },
+    "/api/v1/settings/branding": {
+      "get": {
+        "operationId": "SettingsController_branding",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "settings"
+        ]
+      }
+    },
+    "/api/v1/reports/{kind}.csv": {
+      "get": {
+        "operationId": "ReportsController_csv",
+        "parameters": [
+          {
+            "name": "kind",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "reports"
+        ]
+      }
+    },
+    "/api/v1/reports/{kind}.xlsx": {
+      "get": {
+        "operationId": "ReportsController_excel",
+        "parameters": [
+          {
+            "name": "kind",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "reports"
+        ]
+      }
+    },
+    "/api/v1/reports/{kind}.pdf": {
+      "get": {
+        "operationId": "ReportsController_pdf",
+        "parameters": [
+          {
+            "name": "kind",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "reports"
+        ]
+      }
+    },
+    "/api/v1/reports": {
+      "get": {
+        "operationId": "ReportsController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "reports"
+        ]
+      }
+    },
+    "/api/v1/documents": {
+      "post": {
+        "operationId": "DocumentsController_upload",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/patient/{patientId}": {
+      "get": {
+        "operationId": "DocumentsController_list",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/{id}": {
+      "get": {
+        "operationId": "DocumentsController_download",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/sync/push": {
+      "post": {
+        "operationId": "SyncController_push",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "sync"
+        ]
+      }
+    },
+    "/api/v1/sync/conflicts": {
+      "get": {
+        "operationId": "SyncController_conflicts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "sync"
+        ]
+      }
+    },
+    "/api/v1/sync/conflicts/{id}/resolve": {
+      "post": {
+        "operationId": "SyncController_resolve",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "sync"
+        ]
+      }
+    },
+    "/api/v1/sync/status": {
+      "get": {
+        "operationId": "SyncController_status",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "sync"
+        ]
+      }
+    },
+    "/api/v1/backup": {
+      "post": {
+        "operationId": "BackupController_create",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "backup"
+        ]
+      }
+    },
+    "/api/v1/backup/integrity": {
+      "get": {
+        "operationId": "BackupController_integrity",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "backup"
+        ]
+      }
+    },
+    "/api/v1/health": {
+      "get": {
+        "operationId": "HealthController_check",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "health"
+        ]
+      }
+    },
+    "/api/v1/health/ready": {
+      "get": {
+        "operationId": "HealthController_ready",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "health"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "FICMS API",
+    "description": "Fertility & IVF Clinic Management System — versioned REST API",
+    "version": "0.1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {}
+  }
+}

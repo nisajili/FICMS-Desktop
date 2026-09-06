@@ -366,3 +366,20 @@ label.check {
 .kv li span:first-child {
   color: var(--muted);
 }
+
+/* Software updates */
+.update-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.update-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.update-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

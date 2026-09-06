@@ -3,10 +3,12 @@ import path from 'node:path';
 import fs from 'node:fs';
 import type { ChildProcess } from 'node:child_process';
 import { resolveMode, startStandaloneBackend, stopBackend, type RuntimeConfig } from './backend';
+import { setupAutoUpdater, type UpdaterHandle } from './updater';
 
 let mainWindow: BrowserWindow | null = null;
 let backendChild: ChildProcess | null = null;
 let runtimeConfig: RuntimeConfig | null = null;
+let updater: UpdaterHandle | null = null;
 
 /** Single-instance lock: focus the existing window instead of opening twice. */
 const gotSingleInstanceLock = app.requestSingleInstanceLock();
@@ -77,6 +79,13 @@ function registerIpcHandlers(): void {
       /* ignore invalid URLs */
     }
   });
+
+  // Auto-update controls (no-op unless a packaged build has a feed configured).
+  ipcMain.handle('ficms:update-check', async () => updater?.check());
+  ipcMain.handle('ficms:update-download', async () => updater?.download());
+  ipcMain.handle('ficms:update-install', () => updater?.quitAndInstall());
+  ipcMain.handle('ficms:update-enabled', () => updater?.enabled ?? false);
+  ipcMain.handle('ficms:update-status', () => updater?.status() ?? { state: 'idle' });
 }
 
 // --- Window ---------------------------------------------------------------
@@ -131,6 +140,7 @@ function createWindow(devUrl?: string): BrowserWindow {
 
 async function bootstrap(): Promise<void> {
   registerIpcHandlers();
+  updater = setupAutoUpdater(() => mainWindow);
 
   const mode = resolveMode();
   let apiBaseUrl: string;
