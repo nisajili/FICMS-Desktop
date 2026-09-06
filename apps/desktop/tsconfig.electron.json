@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@ficms/tsconfig/node.json",
+  "compilerOptions": {
+    "outDir": "./dist-electron",
+    "baseUrl": "./",
+    "rootDir": "./electron",
+    "lib": ["ES2022", "DOM"]
+  },
+  "include": ["electron"],
+  "exclude": ["node_modules", "dist-electron"]
+}

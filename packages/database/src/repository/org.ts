@@ -23,7 +23,12 @@ export class SettingsRepository {
   constructor(private readonly db: SqlEngine) {}
 
   async get(): Promise<ClinicSettingsRow> {
-    let row = await this.db.get<ClinicSettingsRow>(`SELECT * FROM clinic_settings LIMIT 1`);
+    let row = await this.db.get<ClinicSettingsRow>(
+      `SELECT id, clinic_name AS clinicName, tagline, legal_name AS legalName, country, currency,
+              timezone, date_format AS dateFormat, locale, languages, address, contacts, brand, numbering,
+              updated_at AS updatedAt
+       FROM clinic_settings LIMIT 1`
+    );
     if (!row) {
       const id = newId();
       row = {

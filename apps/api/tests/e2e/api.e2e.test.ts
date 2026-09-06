@@ -92,9 +92,10 @@ describe('FICMS API (e2e smoke)', () => {
   it('serves public branding without authentication', async () => {
     const res = await fetch(`${base}/api/v1/settings/branding`);
     expect(res.status).toBe(200);
-    const body = (await res.json()) as { currency: string; country: string };
+    const body = (await res.json()) as { currency: string; country: string; clinicName: string };
     expect(body.currency).toBe('TZS');
     expect(body.country).toBe('TZ');
+    expect(body.clinicName).toBe('Fertility & IVF Centre');
   });
 
   it('rejects unauthenticated access to protected routes', async () => {
