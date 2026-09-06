@@ -1,0 +1,26 @@
+{
+  "name": "@ficms/types",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared TypeScript types and DTOs for FICMS",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "test": "vitest run --passWithNoTests",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "devDependencies": {
+    "@ficms/tsconfig": "workspace:*",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.2"
+  }
+}

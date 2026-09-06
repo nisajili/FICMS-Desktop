@@ -1,0 +1,35 @@
+{
+  "name": "@ficms/config",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FICMS configuration schema, loading and validation",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./web": {
+      "types": "./dist/web.d.ts",
+      "require": "./dist/web.js",
+      "default": "./dist/web.js"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "test": "vitest run",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@ficms/tsconfig": "workspace:*",
+    "@types/node": "^22.7.4",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.2"
+  }
+}
