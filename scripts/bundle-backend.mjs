@@ -58,7 +58,8 @@ const WORKSPACE_PACKAGES = ['config', 'types', 'security', 'domain', 'database']
 
 function run(label, cmd, args, opts = {}) {
   console.log(`\n== ${label} ==\n  $ ${cmd} ${args.join(' ')}`);
-  const result = spawnSync(cmd, args, { cwd: root, stdio: 'inherit', ...opts });
+  // `corepack`/`pnpm` are .cmd shims on Windows and must be spawned via a shell.
+  const result = spawnSync(cmd, args, { cwd: root, stdio: 'inherit', shell: process.platform === 'win32', ...opts });
   if (result.status !== 0) {
     throw new Error(`${label} failed with exit code ${result.status}`);
   }
@@ -127,5 +128,12 @@ async function main() {
 
 main().catch((err) => {
   console.error(err);
+  const escaped = String(err && err.stack ? err.stack : err)
+    .replace(/%/g, '%25')
+    .replace(/\r/g, '%0D')
+    .replace(/\n/g, '%0A');
+  // Surface the reason via a GitHub Actions annotation (readable through the
+  // check-runs API when raw step logs are not accessible).
+  console.log(`::error title=bundle-backend::${escaped}`);
   process.exitCode = 1;
 });

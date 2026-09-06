@@ -55,8 +55,7 @@ jobs:
         run: node scripts/bundle-backend.mjs
 
       - name: Package installers
-        working-directory: apps/desktop
-        run: pnpm exec electron-builder ${{ matrix.args }} --publish never
+        run: node scripts/run-electron-builder.mjs ${{ matrix.args }} --publish never
 
       - name: Generate SHA-256 checksums
         run: node scripts/gen-checksums.mjs apps/desktop/release
