@@ -367,4 +367,122 @@ describe('FICMS API (e2e smoke)', () => {
     expect(eventTypes).toContain('CRYO_STORE');
     expect(eventTypes).toContain('CRYO_TRANSFER');
   });
+
+  it('manages donors, counseling, HR, imaging and nursing records', async () => {
+    const authed = (url: string, body?: Record<string, unknown>, method = 'POST') =>
+      fetch(`${base}${url}`, {
+        method,
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
+        ...(body ? { body: JSON.stringify(body) } : {})
+      });
+
+    const patientRes = await authed('/api/v1/patients', { firstName: 'E2E', lastName: 'Clinical', sex: 'FEMALE', dateOfBirth: '1994-03-03' });
+    expect(patientRes.status).toBe(201);
+    const patient = (await patientRes.json()) as { id: string };
+
+    // --- Donor management (identity encrypted, never listed) ---
+    const donorRes = await authed('/api/v1/donors', {
+      donorCode: 'DNR-E2E-01',
+      identity: { fullName: 'E2E Donor', sex: 'FEMALE' },
+      status: 'SCREENING'
+    });
+    expect(donorRes.status).toBe(201);
+    const donor = (await donorRes.json()) as { id: string; donorCode: string };
+    expect(donor.donorCode).toBe('DNR-E2E-01');
+
+    const donationRes = await authed('/api/v1/donors/donations', { donorId: donor.id, sampleBarcode: 'SMP-E2E-DON-01' });
+    expect(donationRes.status).toBe(201);
+
+    const donationsRes = await fetch(`${base}/api/v1/donors/donations?donorId=${donor.id}`, { headers: { Authorization: `Bearer ${accessToken}` } });
+    expect(donationsRes.status).toBe(200);
+    const donations = (await donationsRes.json()) as { sampleBarcode: string }[];
+    expect(donations.some((d) => d.sampleBarcode === 'SMP-E2E-DON-01')).toBe(true);
+
+    const donorsRes = await fetch(`${base}/api/v1/donors`, { headers: { Authorization: `Bearer ${accessToken}` } });
+    expect(donorsRes.status).toBe(200);
+    const donors = (await donorsRes.json()) as { donorCode: string; identity?: unknown }[];
+    expect(donors.some((d) => d.donorCode === 'DNR-E2E-01')).toBe(true);
+    expect(donors.every((d) => !('identity' in d))).toBe(true);
+
+    // --- Counseling (restricted notes encrypted at rest) ---
+    const sessionRes = await authed('/api/v1/counseling/sessions', {
+      patientId: patient.id,
+      kind: 'PRE_TREATMENT',
+      notes: 'E2E counseling note',
+      restricted: true
+    });
+    expect(sessionRes.status).toBe(201);
+
+    const sessionsRes = await fetch(`${base}/api/v1/counseling/patients/${patient.id}/sessions`, {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    expect(sessionsRes.status).toBe(200);
+    const sessions = (await sessionsRes.json()) as { notes: string | null }[];
+    expect(sessions.some((s) => s.notes === 'E2E counseling note')).toBe(true);
+
+    // --- HR (staff profiles, attendance, leave) ---
+    const meRes = await fetch(`${base}/api/v1/auth/me`, { headers: { Authorization: `Bearer ${accessToken}` } });
+    const me = (await meRes.json()) as { id: string };
+    const profileRes = await authed('/api/v1/hr/staff', {
+      userId: me.id,
+      employeeNumber: 'EMP-0001',
+      department: 'Administration',
+      jobTitle: 'System Administrator'
+    });
+    expect(profileRes.status).toBe(201);
+    const profile = (await profileRes.json()) as { id: string };
+
+    const attendanceRes = await authed('/api/v1/hr/attendance', { staffId: profile.id, date: '2026-09-06', checkIn: '08:00', checkOut: '17:00' });
+    expect(attendanceRes.status).toBe(201);
+
+    const leaveRes = await authed('/api/v1/hr/leave', { staffId: profile.id, type: 'ANNUAL', startDate: '2026-09-10', endDate: '2026-09-12' });
+    expect(leaveRes.status).toBe(201);
+    const leave = (await leaveRes.json()) as { id: string; status: string };
+    expect(leave.status).toBe('PENDING');
+
+    const approveRes = await authed(`/api/v1/hr/leave/${leave.id}`, { status: 'APPROVED' }, 'PATCH');
+    expect(approveRes.status).toBe(200);
+
+    const staffRes = await fetch(`${base}/api/v1/hr/staff`, { headers: { Authorization: `Bearer ${accessToken}` } });
+    expect(staffRes.status).toBe(200);
+
+    // --- Imaging (ultrasound study with verification) ---
+    const studyRes = await authed('/api/v1/imaging/studies', {
+      patientId: patient.id,
+      title: 'Baseline follicle scan',
+      type: 'FOLLICLE_SCAN',
+      findings: 'AFC 12',
+      conclusion: 'Normal'
+    });
+    expect(studyRes.status).toBe(201);
+    const study = (await studyRes.json()) as { id: string };
+
+    const verifyRes = await authed(`/api/v1/imaging/studies/${study.id}/verify`);
+    expect(verifyRes.status).toBe(201);
+
+    const studyGetRes = await fetch(`${base}/api/v1/imaging/studies/${study.id}`, { headers: { Authorization: `Bearer ${accessToken}` } });
+    expect(studyGetRes.status).toBe(200);
+    const studyGet = (await studyGetRes.json()) as { status: string; findings: string | null };
+    expect(studyGet.status).toBe('VERIFIED');
+    expect(studyGet.findings).toBe('AFC 12');
+
+    // --- Nursing (vitals + notes) ---
+    const vitalsRes = await authed('/api/v1/nursing/vitals', { patientId: patient.id, systolic: 120, diastolic: 80, heartRate: 72, spo2: 98 });
+    expect(vitalsRes.status).toBe(201);
+
+    const vitalsListRes = await fetch(`${base}/api/v1/nursing/patients/${patient.id}/vitals`, {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    expect(vitalsListRes.status).toBe(200);
+    const vitals = (await vitalsListRes.json()) as { systolic: number }[];
+    expect(vitals.some((v) => v.systolic === 120)).toBe(true);
+
+    const noteRes = await authed('/api/v1/nursing/notes', { patientId: patient.id, kind: 'MEDICATION', title: 'Injection administered', notes: 'E2E nursing note' });
+    expect(noteRes.status).toBe(201);
+
+    const notesRes = await fetch(`${base}/api/v1/nursing/patients/${patient.id}/notes`, {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    expect(notesRes.status).toBe(200);
+  });
 });

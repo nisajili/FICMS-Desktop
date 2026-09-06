@@ -3,7 +3,7 @@
 The FICMS backend is a NestJS service exposing a **versioned REST API** under
 `/api/v1`. Interactive Swagger UI is available at `/docs`, and the OpenAPI 3
 specification at `/docs-json`. A committed copy of the spec ships in
-[`docs/openapi.json`](openapi.json) (129 paths, 153 operations, bearer auth).
+[`docs/openapi.json`](openapi.json) (147 paths, 175 operations, bearer auth).
 
 ## Authentication
 
@@ -35,6 +35,11 @@ specification at `/docs-json`. A committed copy of the spec ships in
 | `/settings` | settings | clinic, branches, departments, services, tests, medications, templates, branding |
 | `/reports` | reports | CSV/XLSX/PDF exports |
 | `/documents` | documents | attachments (S3 or local storage) |
+| `/donors` | donors | donor registration (encrypted identity), donations |
+| `/counseling` | counseling | counseling sessions (restricted, encrypted notes) |
+| `/hr` | hr | staff profiles, attendance, leave |
+| `/imaging` | imaging | ultrasound studies (encrypted findings, verification) |
+| `/nursing` | nursing | vitals and nursing notes |
 | `/sync` | sync | offline sync push/conflicts/status |
 | `/backup` | backup | backup + integrity check |
 | `/health` | health | liveness/readiness |

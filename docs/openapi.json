@@ -2777,6 +2777,413 @@
           "health"
         ]
       }
+    },
+    "/api/v1/donors": {
+      "get": {
+        "operationId": "DonorsController_list",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "donors"
+        ]
+      },
+      "post": {
+        "operationId": "DonorsController_create",
+        "summary": "Register a donor (identity encrypted at rest)",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "donors"
+        ]
+      }
+    },
+    "/api/v1/donors/donations": {
+      "get": {
+        "operationId": "DonorsController_donations",
+        "parameters": [
+          {
+            "name": "donorId",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "donors"
+        ]
+      },
+      "post": {
+        "operationId": "DonorsController_addDonation",
+        "summary": "Record a donation sample for a donor",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "donors"
+        ]
+      }
+    },
+    "/api/v1/counseling/sessions": {
+      "post": {
+        "operationId": "CounselingController_create",
+        "summary": "Record a counseling session (notes encrypted)",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "counseling"
+        ]
+      }
+    },
+    "/api/v1/counseling/patients/{patientId}/sessions": {
+      "get": {
+        "operationId": "CounselingController_list",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "counseling"
+        ]
+      }
+    },
+    "/api/v1/hr/staff": {
+      "get": {
+        "operationId": "HrController_listStaff",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "hr"
+        ]
+      },
+      "post": {
+        "operationId": "HrController_createProfile",
+        "summary": "Create a staff profile (links an auth user to HR records)",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "hr"
+        ]
+      }
+    },
+    "/api/v1/hr/staff/{userId}": {
+      "get": {
+        "operationId": "HrController_profileForUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "hr"
+        ]
+      }
+    },
+    "/api/v1/hr/attendance": {
+      "post": {
+        "operationId": "HrController_attendance",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "hr"
+        ]
+      }
+    },
+    "/api/v1/hr/leave": {
+      "post": {
+        "operationId": "HrController_requestLeave",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "hr"
+        ]
+      }
+    },
+    "/api/v1/hr/leave/{id}": {
+      "patch": {
+        "operationId": "HrController_leaveStatus",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "hr"
+        ]
+      }
+    },
+    "/api/v1/hr/staff/{id}/qualifications": {
+      "patch": {
+        "operationId": "HrController_setQualifications",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "hr"
+        ]
+      }
+    },
+    "/api/v1/imaging/studies": {
+      "post": {
+        "operationId": "ImagingController_create",
+        "summary": "Create an imaging/ultrasound study (findings encrypted)",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "imaging"
+        ]
+      }
+    },
+    "/api/v1/imaging/patients/{patientId}/studies": {
+      "get": {
+        "operationId": "ImagingController_list",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "imaging"
+        ]
+      }
+    },
+    "/api/v1/imaging/studies/{id}": {
+      "get": {
+        "operationId": "ImagingController_get",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "imaging"
+        ]
+      },
+      "patch": {
+        "operationId": "ImagingController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "imaging"
+        ]
+      }
+    },
+    "/api/v1/imaging/studies/{id}/verify": {
+      "post": {
+        "operationId": "ImagingController_verify",
+        "summary": "Verify an imaging study (records the verifying user)",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "imaging"
+        ]
+      }
+    },
+    "/api/v1/nursing/vitals": {
+      "post": {
+        "operationId": "NursingController_recordVitals",
+        "summary": "Record patient vitals",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "nursing"
+        ]
+      }
+    },
+    "/api/v1/nursing/patients/{patientId}/vitals": {
+      "get": {
+        "operationId": "NursingController_listVitals",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "nursing"
+        ]
+      }
+    },
+    "/api/v1/nursing/notes": {
+      "post": {
+        "operationId": "NursingController_createNote",
+        "summary": "Record a nursing note (notes encrypted)",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "nursing"
+        ]
+      }
+    },
+    "/api/v1/nursing/patients/{patientId}/notes": {
+      "get": {
+        "operationId": "NursingController_listNotes",
+        "parameters": [
+          {
+            "name": "patientId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "nursing"
+        ]
+      }
     }
   },
   "info": {

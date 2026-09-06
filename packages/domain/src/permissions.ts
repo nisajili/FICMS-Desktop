@@ -186,6 +186,9 @@ export const ROLE_DEFINITIONS: Record<Role, RoleDefinition> = {
       'cryobank:update',
       'cryobank:verify',
       'cryobank:transfer',
+      'donor:view',
+      'donor:create',
+      'donor:update',
       'patient:view'
     ],
     system: true
@@ -206,6 +209,8 @@ export const ROLE_DEFINITIONS: Record<Role, RoleDefinition> = {
       'cryobank:view',
       'cryobank:create',
       'cryobank:verify',
+      'donor:view',
+      'donor:create',
       'patient:view'
     ],
     system: true

@@ -14,6 +14,7 @@ import { AuditRepository } from './audit';
 import { SyncRepository } from './sync';
 import { DocumentRepository } from './documents';
 import { CounselingRepository, DonorRepository, HrRepository } from './hr';
+import { ImagingRepository, NursingRepository } from './clinical-support';
 
 /**
  * Aggregate of all repositories, bound to a single SQL engine (or a
@@ -55,6 +56,8 @@ export class Repositories {
   readonly counseling: CounselingRepository;
   readonly donors: DonorRepository;
   readonly hr: HrRepository;
+  readonly imaging: ImagingRepository;
+  readonly nursing: NursingRepository;
 
   constructor(readonly db: SqlEngine) {
     this.users = new UserRepository(db);
@@ -91,5 +94,7 @@ export class Repositories {
     this.counseling = new CounselingRepository(db);
     this.donors = new DonorRepository(db);
     this.hr = new HrRepository(db);
+    this.imaging = new ImagingRepository(db);
+    this.nursing = new NursingRepository(db);
   }
 }

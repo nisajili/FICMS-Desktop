@@ -16,6 +16,11 @@ import { DocumentsModule } from './modules/documents/documents.module';
 import { SyncModule } from './modules/sync/sync.module';
 import { BackupModule } from './modules/backup/backup.module';
 import { HealthModule } from './modules/health/health.module';
+import { DonorsModule } from './modules/donors/donors.module';
+import { CounselingModule } from './modules/counseling/counseling.module';
+import { HrModule } from './modules/hr/hr.module';
+import { ImagingModule } from './modules/imaging/imaging.module';
+import { NursingModule } from './modules/nursing/nursing.module';
 import { AuthGuard } from './common/auth.guard';
 import { PermissionsGuard } from './common/permissions.guard';
 import { RateLimitGuard } from './common/rate-limit.guard';
@@ -38,7 +43,12 @@ import { AllExceptionsFilter } from './common/http-exception.filter';
     DocumentsModule,
     SyncModule,
     BackupModule,
-    HealthModule
+    HealthModule,
+    DonorsModule,
+    CounselingModule,
+    HrModule,
+    ImagingModule,
+    NursingModule
   ],
   providers: [
     { provide: APP_GUARD, useClass: RateLimitGuard },

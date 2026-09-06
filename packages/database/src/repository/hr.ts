@@ -37,6 +37,15 @@ export class DonorRepository {
     await this.db.run(`INSERT INTO donations (id, donor_id, sample_barcode, created_at) VALUES (?, ?, ?, ?)`, [id, donorId, sampleBarcode, nowIso()]);
     return id;
   }
+
+  async listDonations(donorId?: string): Promise<Record<string, unknown>[]> {
+    const where = donorId ? `WHERE donor_id = ?` : '';
+    return this.db.all(
+      `SELECT id, donor_id AS donorId, sample_barcode AS sampleBarcode, created_at AS createdAt
+       FROM donations ${where} ORDER BY created_at DESC`,
+      donorId ? [donorId] : []
+    );
+  }
 }
 
 export class HrRepository {
