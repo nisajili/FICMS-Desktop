@@ -1,0 +1,56 @@
+# FICMS desktop packaging configuration (electron-builder).
+# Produces, per platform:
+#   Windows  -> FICMS-<ver>-<arch>.exe (NSIS) + .msi (WiX)
+#   macOS    -> FICMS-<ver>-<arch>.dmg + .pkg
+#   Linux    -> FICMS-<ver>-<arch>.AppImage + .deb + .rpm
+#
+# Windows and macOS installers can only be produced on their native OS
+# (electron-builder cannot cross-compile those from Linux), so CI builds them
+# on windows-latest / macos-13 / macos-14 runners. Linux targets build anywhere
+# Linux runs, including a dev machine or CI.
+appId: com.ficms.desktop
+productName: FICMS
+artifactName: ${productName}-${version}-${arch}.${ext}
+directories:
+  output: release
+  buildResources: build
+files:
+  - dist/**
+  - dist-electron/**
+  - package.json
+extraResources:
+  # Self-contained embedded backend for standalone mode (see scripts/bundle-backend.mjs).
+  - from: backend-bundle
+    to: backend
+asar: true
+npmRebuild: false
+publish: null
+
+win:
+  target:
+    - target: nsis
+      arch: [x64, arm64]
+    - target: msi
+      arch: [x64]
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: false
+
+mac:
+  category: public.app-category.medical
+  target:
+    - target: dmg
+      arch: [x64, arm64]
+    - target: pkg
+      arch: [x64, arm64]
+  hardenedRuntime: true
+  gatekeeperAssess: false
+
+linux:
+  category: Science
+  target:
+    - AppImage
+    - deb
+    - rpm
+  maintainer: FICMS

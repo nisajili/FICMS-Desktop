@@ -1,0 +1,47 @@
+{
+  "name": "@ficms/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FICMS backend REST API (NestJS) under /api/v1",
+  "scripts": {
+    "build": "nest build",
+    "start": "node dist/main.js",
+    "start:dev": "nest start --watch",
+    "start:prod": "node dist/main.js",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:e2e": "nest build && vitest run tests/e2e",
+    "backup": "ts-node src/cli/backup.ts",
+    "restore": "ts-node src/cli/restore.ts"
+  },
+  "dependencies": {
+    "@ficms/config": "workspace:*",
+    "@ficms/database": "workspace:*",
+    "@ficms/domain": "workspace:*",
+    "@ficms/security": "workspace:*",
+    "@ficms/types": "workspace:*",
+    "@nestjs/common": "^10.4.4",
+    "@nestjs/core": "^10.4.4",
+    "@nestjs/platform-express": "^10.4.4",
+    "@nestjs/swagger": "^7.4.2",
+    "helmet": "^7.1.0",
+    "pdfkit": "^0.15.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@ficms/tsconfig": "workspace:*",
+    "@nestjs/cli": "^10.4.5",
+    "@types/express": "^4.17.21",
+    "@types/pdfkit": "^0.13.4",
+    "@types/node": "^22.7.4",
+    "@types/supertest": "^6.0.2",
+    "supertest": "^7.0.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.2"
+  }
+}
